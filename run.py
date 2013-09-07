@@ -54,9 +54,11 @@ def connectToScriptDb(number, msg_type, msg = None):
     # Wait for response
     response = httpServ.getresponse()
     if response.status == httplib.OK:
-    print "Output from GET request"
-    print "========================="
-    print response.read()
+        print "Output from GET request"
+        print "========================="
+        print response.read()
+
+    httpServe.close()
 
 if __name__ == "__main__":
     app.run(debug=True)
