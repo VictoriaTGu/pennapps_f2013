@@ -1,13 +1,17 @@
 from flask import Flask, request, redirect
 import twilio.twiml
 
-import re, httplib
+import re, requests
 
 app = Flask(__name__)
  
 CONFIRM_TYPE = 'confirm'
 AUTOREPLY_TYPE = 'yes'
 OTHER_TYPE = 'other'
+
+TYPE = 'type'
+NUMBER = 'number'
+SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxvQ_b8bf6gr_6vvIsO5w9B30LJoAm_5G5JrZWykoFw0fCdHBw/exec'
 
 @app.route("/", methods=['GET', 'POST'])
 def respond():
@@ -42,23 +46,9 @@ def regex(phrase, body):
     return len(found) > 0
 
 def connectToScriptDb(number, msg_type, msg = None):
-    # Connect to server
-    httpServ = \
-    httplib.HTTPConnection("script.google.com", 80)
-    httpServ.connect()
-
-    # Send Get html request
-    httpServ.request('GET',
-        '/macros/s/AKfycbxvQ_b8bf6gr_6vvIsO5w9B30LJoAm_5G5JrZWykoFw0fCdHBw/exec&type=' + msg_type + '&number=' + number)
-    
-    # Wait for response
-    response = httpServ.getresponse()
-    if response.status == httplib.OK:
-        print "Output from GET request"
-        print "========================="
-        print response.read()
-
-    httpServe.close()
+    parameters = {TYPE: msg_type, NUMBER: number }
+    r = requests.get(SCRIPT_URL, params=parameters)
+    print r.url
 
 if __name__ == "__main__":
     app.run(debug=True)
