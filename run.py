@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect
 import twilio.twiml
 
-import re, requests
+import re, httplib
 
 app = Flask(__name__)
  
@@ -41,8 +41,22 @@ def regex(phrase, body):
     found = regex.findall(body)
     return len(found) > 0
 
-def connectToScriptDb(number, type, msg = None):
-    r = requests.get('https://script.google.com/macros/s/AKfycbxvQ_b8bf6gr_6vvIsO5w9B30LJoAm_5G5JrZWykoFw0fCdHBw/exec&type=' + type + '&number=' + number);
+def connectToScriptDb(number, msg_type, msg = None):
+    # Connect to server
+    httpServ = \
+    httplib.HTTPConnection("script.google.com", 80)
+    httpServ.connect()
+
+    # Send Get html request
+    httpServ.request('GET',
+        '/macros/s/AKfycbxvQ_b8bf6gr_6vvIsO5w9B30LJoAm_5G5JrZWykoFw0fCdHBw/exec&type=' + msg_type + '&number=' + number)
+    
+    # Wait for response
+    response = httpServ.getresponse()
+    if response.status == httplib.OK:
+    print "Output from GET request"
+    print "========================="
+    print response.read()
 
 if __name__ == "__main__":
     app.run(debug=True)
