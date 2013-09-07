@@ -9,7 +9,7 @@ def hello_monkey():
  
     resp = twilio.twiml.Response()
     resp.sms("Hello, Mobile Monkey")
-    return str(resp)
+    return "Hello World"
  
 if __name__ == "__main__":
     app.run(debug=True)
