@@ -1,5 +1,5 @@
 from flask import Flask, request, redirect
-import twilio.twiml
+#import twilio.twiml
  
 app = Flask(__name__)
  
@@ -7,8 +7,8 @@ app = Flask(__name__)
 def hello_monkey():
     """Respond to incoming calls with a simple text message."""
  
-    resp = twilio.twiml.Response()
-    resp.sms("Hello, Mobile Monkey")
+    #resp = twilio.twiml.Response()
+    #resp.sms("Hello, Mobile Monkey")
     return "Hello World"
  
 if __name__ == "__main__":
