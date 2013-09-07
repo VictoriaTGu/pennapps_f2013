@@ -11,7 +11,7 @@ OTHER_TYPE = 'other'
 
 TYPE = 'type'
 NUMBER = 'number'
-SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxvQ_b8bf6gr_6vvIsO5w9B30LJoAm_5G5JrZWykoFw0fCdHBw/exec'
+SCRIPT_URL = 'https://www.google.com/#' #'https://script.google.com/macros/s/AKfycbxvQ_b8bf6gr_6vvIsO5w9B30LJoAm_5G5JrZWykoFw0fCdHBw/exec'
 
 @app.route("/", methods=['GET', 'POST'])
 def respond():
@@ -46,7 +46,8 @@ def regex(phrase, body):
     return len(found) > 0
 
 def connectToScriptDb(number, msg_type, msg = None):
-    parameters = {TYPE: msg_type, NUMBER: number }
+    # parameters = {TYPE: msg_type, NUMBER: number }
+    parameters = { 'q': 'hello'}
     r = requests.get(SCRIPT_URL, params=parameters)
     print r.url
 
